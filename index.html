@@ -9,31 +9,22 @@
 </head>
 <body>
     <header>
-        <h1>David Arellano</h1>
-        <p>Software Engineer | Web Developer | AI Enthusiast</p>
-        <button id="dark-mode-toggle">🌙 Dark Mode</button>
+        <nav>
+            <h1>David Arellano</h1>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button id="dark-mode-toggle">🌙</button>
+        </nav>
     </header>
 
     <section class="hero">
         <h1>Hi, I'm David 👋</h1>
         <p>Welcome to my portfolio. Explore my projects and skills.</p>
-        <a href="#projects" class="btn">View Projects</a>
+        <a href="projects.html" class="btn">View Projects</a>
     </section>
-
-    <section id="projects">
-        <h2>My Projects</h2>
-        <div class="project-container"></div>
-    </section>
-
-    <section id="contact">
-        <h2>Contact Me</h2>
-        <form action="https://formspree.io/f/your-email" method="POST">
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="email" name="email" placeholder="Your Email" required>
-            <textarea name="message" placeholder="Your Message"></textarea>
-            <button type="submit">Send</button>
-        </form>
-    </section>
-
 </body>
 </html>
