@@ -1,14 +1,20 @@
 // Dark Mode Toggle
 const toggle = document.getElementById("dark-mode-toggle");
-toggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
-    localStorage.setItem("dark-mode", document.body.classList.contains("dark-mode"));
-});
 
-// Retain Dark Mode Preference
-if (localStorage.getItem("dark-mode") === "true") {
+// Load dark mode preference from local storage
+if (localStorage.getItem("dark-mode") === "enabled") {
     document.body.classList.add("dark-mode");
 }
+
+toggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    if (document.body.classList.contains("dark-mode")) {
+        localStorage.setItem("dark-mode", "enabled");
+    } else {
+        localStorage.setItem("dark-mode", "disabled");
+    }
+});
+
 
 // Dynamic Project Loading
 const projects = [
@@ -50,3 +56,4 @@ function typeEffect() {
 }
 
 typeEffect();
+
