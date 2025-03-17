@@ -1,59 +1,46 @@
 // Dark Mode Toggle
 const toggle = document.getElementById("dark-mode-toggle");
-
-// Load dark mode preference from local storage
-if (localStorage.getItem("dark-mode") === "enabled") {
-    document.body.classList.add("dark-mode");
-}
-
-toggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
-    if (document.body.classList.contains("dark-mode")) {
-        localStorage.setItem("dark-mode", "enabled");
-    } else {
-        localStorage.setItem("dark-mode", "disabled");
+if (toggle) {
+    if (localStorage.getItem("dark-mode") === "enabled") {
+        document.body.classList.add("dark-mode");
     }
-});
 
-
-// Dynamic Project Loading
-const projects = [
-    { title: "AI Chatbot", link: "https://github.com/dea2414/ai-chatbot", description: "A chatbot using Python & NLP." },
-    { title: "Portfolio Website", link: "https://davidearellano.com", description: "My personal portfolio built with HTML, CSS, and JavaScript." },
-    { title: "E-Commerce API", link: "https://github.com/dea2414/ecommerce-api", description: "A RESTful API using Node.js & MongoDB." }
-];
-
-const projectContainer = document.querySelector(".project-container");
-
-if (projectContainer) {
-    projects.forEach(project => {
-        const projectCard = document.createElement("div");
-        projectCard.classList.add("project-card");
-        projectCard.innerHTML = `
-            <h3>${project.title}</h3>
-            <p>${project.description}</p>
-            <a href="${project.link}" target="_blank">View Project</a>
-        `;
-        projectContainer.appendChild(projectCard);
+    toggle.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+        localStorage.setItem("dark-mode", document.body.classList.contains("dark-mode") ? "enabled" : "disabled");
     });
 }
 
-// Typing Effect in Hero Section
-const textElement = document.createElement("h2");
-textElement.textContent = "Full-Stack Developer | AI Enthusiast";
-document.querySelector(".hero").appendChild(textElement);
-
-let index = 0;
-const text = textElement.textContent;
-textElement.textContent = "";
-
-function typeEffect() {
-    if (index < text.length) {
-        textElement.textContent += text.charAt(index);
-        index++;
-        setTimeout(typeEffect, 100);
-    }
+// Handle Profile Selection & Redirect to Dashboard
+const loginBtn = document.getElementById("login-btn");
+if (loginBtn) {
+    loginBtn.addEventListener("click", () => {
+        const profileType = document.getElementById("profile-select").value;
+        localStorage.setItem("profile", profileType);
+        window.location.href = "dashboard.html";
+    });
 }
 
-typeEffect();
+// Load User Profile Content
+if (window.location.pathname.includes("dashboard.html")) {
+    const profileType = localStorage.getItem("profile") || "guest";
+    const welcomeMessage = document.getElementById("welcome-message");
+    const customContent = document.getElementById("custom-content");
 
+    if (profileType === "recruiter") {
+        welcomeMessage.textContent = "Hello, Recruiter! Let's discuss job opportunities.";
+        customContent.innerHTML = `<p>Here are my best projects and resume.</p><a href="projects.html" class="btn">View Projects</a>`;
+    } else if (profileType === "friend") {
+        welcomeMessage.textContent = "Yo Friend! Glad you're here.";
+        customContent.innerHTML = `<p>Check out some fun stuff I've been working on.</p><a href="blog.html" class="btn">Read My Blog</a>`;
+    } else if (profileType === "family") {
+        welcomeMessage.textContent = "Welcome, Family! Thanks for supporting me.";
+        customContent.innerHTML = `<p>See what I've been up to lately.</p><a href="contact.html" class="btn">Contact Me</a>`;
+    } else if (profileType === "stalker") {
+        welcomeMessage.textContent = "Oh... it's you.";
+        customContent.innerHTML = `<p>Nothing to see here. Move along.</p>`;
+    } else {
+        welcomeMessage.textContent = "Welcome!";
+        customContent.innerHTML = `<p>Select a profile to see personalized content.</p>`;
+    }
+}
