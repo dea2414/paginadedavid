@@ -1,4 +1,4 @@
-/* Light Theme */
+/* General Styles */
 body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(to right, #ff7e5f, #feb47b);
@@ -35,7 +35,7 @@ nav a {
     text-decoration: none;
 }
 
-/* Login Screen */
+/* Login Page */
 .login {
     text-align: center;
     padding: 50px;
@@ -51,4 +51,19 @@ nav a {
 .profile-content {
     text-align: center;
     padding: 40px;
+}
+
+/* Button Styling */
+.btn {
+    background: white;
+    color: black;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: black;
+    color: white;
 }
