@@ -54,7 +54,6 @@ document.addEventListener("DOMContentLoaded", function() {
         const welcomeMessage = document.getElementById("welcome-message");
         const customContent = document.getElementById("custom-content");
 
-        // Dynamic content based on profile
         const profileMessages = {
             recruiter: {
                 title: "Hello, Recruiter! Let's discuss job opportunities.",
@@ -78,7 +77,6 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         };
 
-        // Apply profile-specific content
         welcomeMessage.textContent = profileMessages[profileType].title;
         customContent.innerHTML = profileMessages[profileType].content;
     }
