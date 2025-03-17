@@ -1,29 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Portfolio - David</title>
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
-  <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David Arellano - Portfolio</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script defer src="js/script.js"></script>
+</head>
+<body>
     <header>
-      <h1>Welcome to My Portfolio</h1>
-      <p> Acabo de terminar, muucho por seguir</p>
-      <p>Software Engineer | Web Developer | Problem Solver</p>
+        <h1>David Arellano</h1>
+        <p>Software Engineer | Web Developer | AI Enthusiast</p>
+        <button id="dark-mode-toggle">🌙 Dark Mode</button>
     </header>
-    <section>
-      <h2>Projects</h2>
-      <p>Here are some of my featured projects:</p>
-      <ul>
-        <li><a href="#">Project 1</a></li>
-        <li><a href="#">Project 2</a></li>
-        <li><a href="#">Project 3</a></li>
-      </ul>
+
+    <section class="hero">
+        <h1>Hi, I'm David 👋</h1>
+        <p>Welcome to my portfolio. Explore my projects and skills.</p>
+        <a href="#projects" class="btn">View Projects</a>
     </section>
-    <footer>
-      <p>Contact me: dearell@ilstu.edu</p>
-    </footer>
-    <script src="js/script.js"></script>
-  </body>
+
+    <section id="projects">
+        <h2>My Projects</h2>
+        <div class="project-container"></div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Me</h2>
+        <form action="https://formspree.io/f/your-email" method="POST">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" placeholder="Your Message"></textarea>
+            <button type="submit">Send</button>
+        </form>
+    </section>
+
+</body>
 </html>
