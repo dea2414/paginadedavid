@@ -1,22 +1,40 @@
+/* modern dark theme */
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    background-color: #121212;
+    color: #ffffff;
     margin: 0;
     padding: 0;
 }
+
+/* header styles */
 header {
-    background: #333;
-    color: white;
+    background: #1e1e1e;
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* project section */
+.project {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
     padding: 20px;
 }
-section {
-    margin: 20px;
+
+.project-card {
+    background: #222;
+    padding: 15px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
 }
-footer {
-    background: #333;
-    color: white;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+
+.project-card:hover {
+    transform: scale(1.05);
 }
