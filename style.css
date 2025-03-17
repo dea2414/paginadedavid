@@ -1,4 +1,4 @@
-/* Default Light Mode */
+/* Light Theme */
 body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(to right, #ff7e5f, #feb47b);
@@ -35,32 +35,20 @@ nav a {
     text-decoration: none;
 }
 
-#dark-mode-toggle {
-    background: none;
-    border: none;
-    font-size: 1.5em;
-    cursor: pointer;
-}
-
-/* Hero Section */
-.hero {
+/* Login Screen */
+.login {
     text-align: center;
-    padding: 80px 20px;
-    background: linear-gradient(90deg, #ff8a00, #da1b60);
-    color: white;
+    padding: 50px;
 }
 
-/* Buttons */
-.btn {
-    background: white;
-    color: black;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: 0.3s;
+#profile-select, #login-btn {
+    font-size: 18px;
+    padding: 10px;
+    margin: 10px;
 }
 
-.btn:hover {
-    background: black;
-    color: white;
+/* Profile Content */
+.profile-content {
+    text-align: center;
+    padding: 40px;
 }
