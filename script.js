@@ -1,35 +1,26 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function() {
+  // Attach click events to profile links on index.html
   const links = document.querySelectorAll(".profile-link");
   links.forEach(link => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      const profile = link.getAttribute("data-profile");
+    link.addEventListener("click", function() {
+      const profile = this.getAttribute("data-profile");
       localStorage.setItem("profile", profile);
-      window.location.href = link.getAttribute("href");
     });
   });
 
-  if (window.location.pathname.includes("dashboard.html")) {
+  // On dashboard.html, display profile-specific content
+  if (window.location.pathname.indexOf("dashboard.html") !== -1) {
     const profile = localStorage.getItem("profile") || "guest";
-    const msg = document.getElementById("welcome-message");
-    const content = document.getElementById("custom-content");
-    const views = {
-      recruiter: ["Hello Recruiter", '<a href="projects.html" class="btn">View Projects</a>'],
-      friend: ["Hey Friend", '<a href="blog.html" class="btn">Read Blog</a>'],
-      family: ["Hi Family", '<a href="contact.html" class="btn">Contact Me</a>'],
-      stalker: ["...you found me", "No content"],
-      guest: ["Welcome", "No profile selected"]
+    const welcome = document.getElementById("welcome");
+    const content = document.getElementById("content");
+    const messages = {
+      recruiter: "Hello Recruiter!",
+      friend: "Hey Friend!",
+      family: "Hi Family!",
+      stalker: "Go away, stalker!",
+      guest: "Welcome, guest."
     };
-    msg.textContent = views[profile][0];
-    content.innerHTML = views[profile][1];
-  }
-
-  const toggle = document.getElementById("dark-mode-toggle");
-  if (toggle) {
-    if (localStorage.getItem("dark") === "1") document.body.classList.add("dark");
-    toggle.onclick = () => {
-      document.body.classList.toggle("dark");
-      localStorage.setItem("dark", document.body.classList.contains("dark") ? "1" : "0");
-    };
+    welcome.textContent = messages[profile] || "Welcome.";
+    content.innerHTML = "<p>This is your dashboard for profile: " + profile + "</p>";
   }
 });
