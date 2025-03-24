@@ -4,23 +4,14 @@
   <meta charset="UTF-8">
   <title>Dashboard</title>
   <link rel="stylesheet" href="css/style.css">
-  <script defer src="js/script.js"></script>
+  <script src="js/script.js" defer></script>
 </head>
 <body>
-  <header>
-    <nav>
-      <ul>
-        <li><a href="projects.html">Projects</a></li>
-        <li><a href="blog.html">Blog</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="index.html">Logout</a></li>
-      </ul>
-      <button id="dark-mode-toggle">🌙</button>
-    </nav>
-  </header>
-  <section class="profile-content">
-    <h2 id="welcome-message"></h2>
-    <div id="custom-content"></div>
-  </section>
+  <div class="container">
+    <h1 id="welcome"></h1>
+    <div id="content"></div>
+    <a href="index.html" class="logout">Logout</a>
+    <div class="version">Version 3.0</div>
+  </div>
 </body>
 </html>
