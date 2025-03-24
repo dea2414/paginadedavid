@@ -1,33 +1,46 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const links = document.querySelectorAll(".profile-link");
-  links.forEach(link => {
-    link.addEventListener("click", () => {
-      const profile = link.getAttribute("data-profile");
-      localStorage.setItem("profile", profile);
+  const profileLinks = document.querySelectorAll('.profile-btn');
+  profileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      const profile = link.getAttribute('data-profile');
+      localStorage.setItem('profile', profile);
     });
   });
 
-  if (window.location.pathname.includes("dashboard.html")) {
-    const profile = localStorage.getItem("profile") || "guest";
-    const welcome = document.getElementById("welcome-message");
-    const content = document.getElementById("custom-content");
-    const views = {
-      recruiter: ["Hello Recruiter", '<a class="btn" href="projects.html">View Projects</a>'],
-      friend: ["Hey Friend", '<a class="btn" href="blog.html">Read Blog</a>'],
-      family: ["Hi Family", '<a class="btn" href="contact.html">Contact Me</a>'],
-      stalker: ["Uh oh...", "No content available."],
-      guest: ["Welcome", "No profile selected."]
-    };
-    welcome.textContent = views[profile][0];
-    content.innerHTML = views[profile][1];
+  const darkToggle = document.getElementById('dark-toggle');
+  if (darkToggle) {
+    darkToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      localStorage.setItem('dark', document.body.classList.contains('dark') ? 'true' : 'false');
+    });
   }
 
-  const toggle = document.getElementById("dark-mode-toggle");
-  if (toggle) {
-    if (localStorage.getItem("dark") === "1") document.body.classList.add("dark");
-    toggle.addEventListener("click", () => {
-      document.body.classList.toggle("dark");
-      localStorage.setItem("dark", document.body.classList.contains("dark") ? "1" : "0");
-    });
+  if (window.location.pathname.includes('dashboard.html')) {
+    const profile = localStorage.getItem('profile') || 'guest';
+    const welcomeMsg = document.getElementById('welcome-msg');
+    const profileDesc = document.getElementById('profile-desc');
+    if (profile === 'recruiter') {
+      welcomeMsg.textContent = 'Hello Recruiter!';
+      profileDesc.textContent = 'Discover my professional projects and resume.';
+      document.body.classList.add('recruiter-theme');
+    } else if (profile === 'friend') {
+      welcomeMsg.textContent = 'Hey Friend!';
+      profileDesc.textContent = 'Check out fun projects and blog posts.';
+      document.body.classList.add('friend-theme');
+    } else if (profile === 'family') {
+      welcomeMsg.textContent = 'Hi Family!';
+      profileDesc.textContent = 'I appreciate your support. See my latest updates.';
+      document.body.classList.add('family-theme');
+    } else if (profile === 'stalker') {
+      welcomeMsg.textContent = 'Uh oh...';
+      profileDesc.textContent = 'Not much to see here. Please leave.';
+      document.body.classList.add('stalker-theme');
+    } else {
+      welcomeMsg.textContent = 'Welcome!';
+      profileDesc.textContent = 'Please select a profile from the home page.';
+    }
+    if (localStorage.getItem('dark') === 'true') {
+      document.body.classList.add('dark');
+    }
   }
 });
