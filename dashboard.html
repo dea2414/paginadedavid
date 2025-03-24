@@ -8,28 +8,30 @@
   <script src="js/script.js" defer></script>
 </head>
 <body>
-  <header>
-    <nav>
-      <div class="logo">
-        <h1>Dashboard</h1>
+  <div class="container">
+    <header>
+      <nav>
+        <div class="logo">
+          <h1>Dashboard</h1>
+        </div>
+        <ul class="nav-links">
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="index.html">Logout</a></li>
+        </ul>
+        <button id="dark-toggle">Toggle Dark</button>
+      </nav>
+    </header>
+    <main>
+      <div id="profile-info">
+        <h2 id="welcome-msg"></h2>
+        <p id="profile-desc"></p>
       </div>
-      <ul class="nav-links">
-        <li><a href="projects.html">Projects</a></li>
-        <li><a href="blog.html">Blog</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="index.html">Logout</a></li>
-      </ul>
-      <button id="dark-mode-toggle">🌙</button>
-    </nav>
-  </header>
-  <main>
-    <section class="profile-content">
-      <h2 id="welcome-message"></h2>
-      <div id="custom-content"></div>
-    </section>
-  </main>
-  <footer>
-    <p>Version 3.1 - Last updated: 2025-03-24</p>
-  </footer>
+    </main>
+    <footer>
+      <p>Version 4.0 - 2025-03-24</p>
+    </footer>
+  </div>
 </body>
 </html>
