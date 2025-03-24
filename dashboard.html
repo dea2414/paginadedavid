@@ -1,17 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Dashboard</title>
+  <title>Dashboard - Ian Harp</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <script src="js/script.js" defer></script>
 </head>
 <body>
-  <div class="container">
-    <h1 id="welcome"></h1>
-    <div id="content"></div>
-    <a href="index.html" class="logout">Logout</a>
-    <div class="version">Version 3.0</div>
-  </div>
+  <header>
+    <nav>
+      <div class="logo">
+        <h1>Dashboard</h1>
+      </div>
+      <ul class="nav-links">
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="index.html">Logout</a></li>
+      </ul>
+      <button id="dark-mode-toggle">🌙</button>
+    </nav>
+  </header>
+  <main>
+    <section class="profile-content">
+      <h2 id="welcome-message"></h2>
+      <div id="custom-content"></div>
+    </section>
+  </main>
+  <footer>
+    <p>Version 3.1 - Last updated: 2025-03-24</p>
+  </footer>
 </body>
 </html>
