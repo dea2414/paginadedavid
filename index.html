@@ -2,25 +2,18 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Login</title>
+  <title>Profile Selection</title>
   <link rel="stylesheet" href="css/style.css">
-  <script defer src="js/script.js"></script>
+  <script src="js/script.js" defer></script>
 </head>
 <body>
-  <footer>
-  <p>Version 2.0 - Last updated: 2023-03-24</p>
-</footer>
-
-  <section class="login">
-    <h1>Welcome to Ian Harp's Portfolio</h1>
-    <select id="profile-select">
-      <option value="">-- Choose --</option>
-      <option value="recruiter">Recruiter</option>
-      <option value="friend">Friend</option>
-      <option value="family">Family</option>
-      <option value="stalker">Stalker</option>
-    </select>
-    <button id="login-btn">Enter</button>
-  </section>
+  <div class="container">
+    <h1>Select Your Profile</h1>
+    <a class="profile-link" data-profile="recruiter" href="dashboard.html">Recruiter</a>
+    <a class="profile-link" data-profile="friend" href="dashboard.html">Friend</a>
+    <a class="profile-link" data-profile="family" href="dashboard.html">Family</a>
+    <a class="profile-link" data-profile="stalker" href="dashboard.html">Stalker</a>
+    <div class="version">Version 3.0</div>
+  </div>
 </body>
 </html>
