@@ -1,29 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
-  <title>Profile Selection - Ian Harp</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-  <script src="js/script.js" defer></script>
+  <title>Profile Selection</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: linear-gradient(to right, #ff7e5f, #feb47b);
+      color: #333;
+      text-align: center;
+      margin-top: 50px;
+    }
+    a {
+      text-decoration: none;
+      background: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      margin: 10px;
+      display: inline-block;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+    a:hover {
+      background: #0056b3;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Ian Harp Portfolio</h1>
-    </header>
-    <main>
-      <h2>Select Your Profile</h2>
-      <div class="profile-buttons">
-        <a class="profile-btn" data-profile="recruiter" href="dashboard.html">Recruiter</a>
-        <a class="profile-btn" data-profile="friend" href="dashboard.html">Friend</a>
-        <a class="profile-btn" data-profile="family" href="dashboard.html">Family</a>
-        <a class="profile-btn" data-profile="stalker" href="dashboard.html">Stalker</a>
-      </div>
-    </main>
-    <footer>
-      <p>Version 4.0 - 2025-03-24</p>
-    </footer>
-  </div>
+  <h1>Select Your Profile</h1>
+  <a href="dashboard.html" data-profile="recruiter">Recruiter</a>
+  <a href="dashboard.html" data-profile="friend">Friend</a>
+  <a href="dashboard.html" data-profile="family">Family</a>
+  <a href="dashboard.html" data-profile="stalker">Stalker</a>
+  <script>
+    document.querySelectorAll("a[data-profile]").forEach(function(link) {
+      link.addEventListener("click", function() {
+        localStorage.setItem("profile", this.getAttribute("data-profile"));
+      });
+    });
+  </script>
 </body>
 </html>
