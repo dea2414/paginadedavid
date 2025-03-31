@@ -19,28 +19,50 @@ document.addEventListener("DOMContentLoaded", () => {
     const profile = localStorage.getItem('profile') || 'guest';
     const welcomeMsg = document.getElementById('welcome-msg');
     const profileDesc = document.getElementById('profile-desc');
-    if (profile === 'recruiter') {
-      welcomeMsg.textContent = 'Hello Recruiter!';
-      profileDesc.textContent = 'Discover my professional projects and resume.';
-      document.body.classList.add('recruiter-theme');
-    } else if (profile === 'friend') {
-      welcomeMsg.textContent = 'Hey Friend!';
-      profileDesc.textContent = 'Check out fun projects and blog posts.';
-      document.body.classList.add('friend-theme');
-    } else if (profile === 'family') {
-      welcomeMsg.textContent = 'Hi Family!';
-      profileDesc.textContent = 'I appreciate your support. See my latest updates.';
-      document.body.classList.add('family-theme');
-    } else if (profile === 'stalker') {
-      welcomeMsg.textContent = 'Uh oh...';
-      profileDesc.textContent = 'Not much to see here. Please leave.';
-      document.body.classList.add('stalker-theme');
-    } else {
-      welcomeMsg.textContent = 'Welcome!';
-      profileDesc.textContent = 'Please select a profile from the home page.';
-    }
-    if (localStorage.getItem('dark') === 'true') {
-      document.body.classList.add('dark');
-    }
+    const extraInfo = document.getElementById('extra-info');
+    const moreBtn = document.getElementById('more-info');
+    const profiles = {
+      recruiter: {
+        title: "Hello Recruiter!",
+        desc: "Discover my professional projects and resume.",
+        extra: "Recruiter Extra: Experienced in IT recruiting and talent acquisition."
+      },
+      friend: {
+        title: "Hey Friend!",
+        desc: "Check out fun projects and blog posts.",
+        extra: "Friend Extra: Catch up on my latest adventures and side projects."
+      },
+      family: {
+        title: "Hi Family!",
+        desc: "I appreciate your support. See my latest updates.",
+        extra: "Family Extra: Proud moments and personal growth updates."
+      },
+      stalker: {
+        title: "Uh oh...",
+        desc: "Not much to see. Please leave.",
+        extra: "Stalker Extra: This area is private."
+      },
+      guest: {
+        title: "Welcome!",
+        desc: "No profile selected.",
+        extra: "Guest Extra: Please select a profile from the home page."
+      }
+    };
+    const current = profiles[profile] || profiles.guest;
+    welcomeMsg.textContent = current.title;
+    profileDesc.textContent = current.desc;
+    moreBtn.addEventListener('click', () => {
+      if (extraInfo.classList.contains('hidden')) {
+        extraInfo.textContent = current.extra;
+        extraInfo.classList.remove('hidden');
+        moreBtn.textContent = "Less Info";
+      } else {
+        extraInfo.classList.add('hidden');
+        extraInfo.textContent = "";
+        moreBtn.textContent = "More Info";
+      }
+    });
+    if (localStorage.getItem('dark') === 'true') document.body.classList.add('dark');
+    document.body.classList.add(profile + "-theme");
   }
 });
