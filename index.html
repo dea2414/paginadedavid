@@ -4,21 +4,38 @@
   <meta charset="UTF-8">
   <title>Profile Selection</title>
   <style>
-    body { font-family: sans-serif; background: linear-gradient(to right, #ff7e5f, #feb47b); color: #333; text-align: center; padding: 50px; }
-    a { display: inline-block; margin: 10px; padding: 12px 24px; background: #007bff; color: #fff; text-decoration: none; border-radius: 4px; transition: background 0.3s; }
-    a:hover { background: #0056b3; }
+    body {
+      font-family: sans-serif;
+      background: linear-gradient(to right, #ff7e5f, #feb47b);
+      color: #333;
+      text-align: center;
+      margin-top: 50px;
+    }
+    a {
+      text-decoration: none;
+      background: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      margin: 10px;
+      display: inline-block;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+    a:hover {
+      background: #0056b3;
+    }
   </style>
 </head>
 <body>
-  <h1>Select a Profile</h1>
+  <h1>Select Your Profile</h1>
   <a href="dashboard.html" data-profile="recruiter">Recruiter</a>
   <a href="dashboard.html" data-profile="friend">Friend</a>
   <a href="dashboard.html" data-profile="family">Family</a>
   <a href="dashboard.html" data-profile="stalker">Stalker</a>
   <script>
-    document.querySelectorAll('a[data-profile]').forEach(link => {
-      link.addEventListener('click', function() {
-        localStorage.setItem('profile', this.getAttribute('data-profile'));
+    document.querySelectorAll("a[data-profile]").forEach(function(link) {
+      link.addEventListener("click", function() {
+        localStorage.setItem("profile", this.getAttribute("data-profile"));
       });
     });
   </script>
