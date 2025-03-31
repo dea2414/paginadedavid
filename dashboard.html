@@ -1,39 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
-  <title>Dashboard - David Arellano</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-  <script src="js/script.js" defer></script>
+  <title>Dashboard</title>
+  <style>
+    body { font-family: sans-serif; background: linear-gradient(to right, #cce4ff, #e0f0ff); color: #333; text-align: center; padding: 50px; }
+    .hidden { display: none; }
+    button { padding: 10px 20px; margin-top: 20px; border: none; border-radius: 4px; background: #28a745; color: #fff; cursor: pointer; transition: background 0.3s; }
+    button:hover { background: #1e7e34; }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <nav>
-        <div class="logo">
-          <h1>Dashboard</h1>
-        </div>
-        <ul class="nav-links">
-          <li><a href="projects.html">Projects</a></li>
-          <li><a href="blog.html">Blog</a></li>
-          <li><a href="contact.html">Contact</a></li>
-          <li><a href="index.html">Logout</a></li>
-        </ul>
-        <button id="dark-toggle">Toggle Dark</button>
-      </nav>
-    </header>
-    <main>
-      <section class="profile-content">
-        <h2 id="welcome-msg"></h2>
-        <p id="profile-desc"></p>
-        <button id="more-info" class="btn">More Info</button>
-        <div id="extra-info" class="hidden"></div>
-      </section>
-    </main>
-    <footer>
-      <p>Version 5.0 - Last updated: 2025-03-24</p>
-    </footer>
-  </div>
+  <h1 id="welcome-msg"></h1>
+  <p id="profile-desc"></p>
+  <button id="more-info">More Info</button>
+  <div id="extra-info" class="hidden"></div>
+  <script>
+    var profile = localStorage.getItem('profile') || 'guest';
+    var views = {
+      recruiter: { title: "Hello Recruiter", desc: "Check out my projects and resume.", extra: "Extra info: I have 5 years recruiting in tech." },
+      friend:    { title: "Hello Friend",    desc: "Read my blog and see fun projects.", extra: "Extra info: Let's catch up soon!" },
+      family:    { title: "Hello Family",    desc: "Here's my latest update.", extra: "Extra info: Proud moments and family news." },
+      stalker:   { title: "Go away",         desc: "Nothing to see here.", extra: "Extra info: Seriously, leave now." },
+      guest:     { title: "Welcome",         desc: "No profile selected.", extra: "Extra info: Please select a profile from the home page." }
+    };
+    document.getElementById("welcome-msg").innerText = views[profile].title;
+    document.getElementById("profile-desc").innerText = views[profile].desc;
+    var moreBtn = document.getElementById("more-info");
+    var extraDiv = document.getElementById("extra-info");
+    moreBtn.addEventListener("click", function() {
+      if (extraDiv.classList.contains("hidden")) {
+        extraDiv.innerText = views[profile].extra;
+        extraDiv.classList.remove("hidden");
+        moreBtn.innerText = "Less Info";
+      } else {
+        extraDiv.classList.add("hidden");
+        extraDiv.innerText = "";
+        moreBtn.innerText = "More Info";
+      }
+    });
+  </script>
 </body>
 </html>
