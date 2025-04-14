@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Profile Selection</title>
@@ -27,28 +27,104 @@
     .center-image {
       display: block;
       margin: 30px auto;
-      max-width: 80%;
+      max-width: 50%;
       height: auto;
+    }
+    .scoreboard {
+      margin-top: 40px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .scoreboard h2 {
+      margin-bottom: 20px;
+    }
+    .scoreboard table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .scoreboard th, .scoreboard td {
+      padding: 8px;
+      border: 1px solid #ccc;
     }
   </style>
 </head>
 <body>
   <h1>Select Your Profile</h1>
   
-  <!-- Central Image -->
+  <!-- Central Image (smaller) -->
   <img src="https://cdn-3.expansion.mx/dims4/default/352a2a1/2147483647/strip/true/crop/2706x2964+0+0/resize/1200x1314!/quality/90/?url=https://cdn-3.expansion.mx/da/96/6c9f908040d8a4384a30b4719cd4/gettyimages-982077636.jpg" 
        alt="Central Profile Showcase" class="center-image" />
-
+  
+  <!-- Profile selection buttons -->
   <a href="dashboard.html" data-profile="recruiter">Recruiter</a>
   <a href="dashboard.html" data-profile="friend">Friend</a>
   <a href="dashboard.html" data-profile="family">Family</a>
   <a href="dashboard.html" data-profile="stalker">Stalker</a>
+  
+  <!-- New: Live Scoreboard Section -->
+  <div class="scoreboard" id="scoreboard">
+    <h2>Live Scoreboard</h2>
+    <table id="score-table">
+      <thead>
+        <tr>
+          <th>Team</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Table rows populated dynamically -->
+      </tbody>
+    </table>
+  </div>
+  
   <script>
+    // Profile selection: save profile in localStorage when a button is clicked.
     document.querySelectorAll("a[data-profile]").forEach(function(link) {
       link.addEventListener("click", function() {
         localStorage.setItem("profile", this.getAttribute("data-profile"));
       });
     });
+
+    // Dummy API call: simulate fetching scores/standings.
+    function fetchScores() {
+      // In a real scenario, you'd use fetch('https://api.example.com/scores')
+      // For now, we simulate with a promise returning dummy data.
+      const dummyData = [
+        { team: "Team A", score: 42 },
+        { team: "Team B", score: 35 },
+        { team: "Team C", score: 28 }
+      ];
+      return new Promise((resolve) => {
+        setTimeout(() => resolve(dummyData), 1000);
+      });
+    }
+
+    function populateScoreboard() {
+      fetchScores().then(function(scores) {
+        const tbody = document.getElementById("score-table").querySelector("tbody");
+        tbody.innerHTML = ""; // Clear any existing content.
+        scores.forEach(function(item) {
+          const row = document.createElement("tr");
+          const teamCell = document.createElement("td");
+          teamCell.textContent = item.team;
+          const scoreCell = document.createElement("td");
+          scoreCell.textContent = item.score;
+          row.appendChild(teamCell);
+          row.appendChild(scoreCell);
+          tbody.appendChild(row);
+        });
+      }).catch(function(err) {
+        console.error("Error fetching scores:", err);
+      });
+    }
+    
+    // Populate the scoreboard when the page loads.
+    populateScoreboard();
   </script>
 </body>
 </html>
