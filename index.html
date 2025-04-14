@@ -1,41 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
-  <title>David Arellano Portfolio - Home</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script defer src="js/script.js"></script>
+  <title>Profile Selection</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: linear-gradient(to right, #ff7e5f, #feb47b);
+      color: #333;
+      text-align: center;
+      margin-top: 50px;
+    }
+    a {
+      text-decoration: none;
+      background: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      margin: 10px;
+      display: inline-block;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+    a:hover {
+      background: #0056b3;
+    }
+  </style>
 </head>
 <body>
-  <!-- Navbar -->
-  <header>
-    <nav class="navbar">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="projects.html">Projects</a>
-      <a href="blog.html">Blog</a>
-      <a href="contact.html">Contact</a>
-      <a href="dashboard.html" id="dashboard-link">Dashboard</a>
-      <a href="https://www.fox.com" target="_blank" class="external-link">Fox.com</a>
-    </nav>
-  </header>
+  <h1>Select Your Profile</h1>
+  <a href="dashboard.html" data-profile="recruiter">Recruiter</a>
+  <a href="dashboard.html" data-profile="friend">Friend</a>
+  <a href="dashboard.html" data-profile="family">Family</a>
+  <a href="dashboard.html" data-profile="stalker">Stalker</a>
+  <script>
+    document.querySelectorAll("a[data-profile]").forEach(function(link) {
+      link.addEventListener("click", function() {
+        localStorage.setItem("profile", this.getAttribute("data-profile"));
+      });
+    });
+  </script>
 
-  <!-- Main Content -->
-  <main>
-    <section class="hero">
-      <h1>Ian Harp Portfolio</h1>
-      <p>Showcase of skills for recruiters. Choose your profile:</p>
-      <div class="profile-buttons">
-        <button class="profile-btn" data-profile="recruiter">Recruiter</button>
-        <button class="profile-btn" data-profile="friend">Friend</button>
-        <button class="profile-btn" data-profile="family">Family</button>
-        <button class="profile-btn" data-profile="stalker">Stalker</button>
-      </div>
-    </section>
-  </main>
 
-  <footer>
-    <p>&copy; 2025 David Arellano. All rights reserved. Version 5.0</p>
-  </footer>
-</body>
-</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
