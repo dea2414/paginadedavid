@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Weather Checker - Ian Harp Portfolio</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/weather.js"></script>
+</head>
+<body>
+  <!-- Navbar (modify to match your existing navigation if necessary) -->
+  <header>
+    <nav class="navbar">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="weather.html" class="active">Weather</a>
+    </nav>
+  </header>
+  
+  <!-- Main Content -->
+  <main class="content-section">
+    <h1>Weather Checker</h1>
+    <p>Enter a city to get its current temperature in Fahrenheit:</p>
+    <form id="weather-form">
+      <input type="text" id="city" placeholder="Enter a city" required>
+      <button type="submit" class="btn">Get Weather</button>
+    </form>
+    <div id="weather-result"></div>
+  </main>
+  
+  <footer>
+    <p>&copy; 2025 Ian Harp. All rights reserved. Version 5.0</p>
+  </footer>
+</body>
+</html>
