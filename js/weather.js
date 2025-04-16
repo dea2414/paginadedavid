@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    //  ← YOUR WeatherAPI.com key goes here ←
     const apiKey = "d65e0394269143c193e215726251404";
     const url =
       "https://api.weatherapi.com/v1/current.json" +
@@ -24,21 +23,41 @@ document.addEventListener("DOMContentLoaded", () => {
       const resp = await fetch(url);
       const data = await resp.json();
 
-      // If the API returns an error object, show it:
       if (data.error) {
         output.innerHTML = `<p>Error: ${data.error.message}</p>`;
         return;
       }
 
-      // Otherwise display the temperature:
-      const tempF     = data.current.temp_f;
-      const condition = data.current.condition.text;
-      const loc       = data.location;
+      // Destructure the fields we care about:
+      const { location, current } = data;
+      const {
+        temp_f,
+        temp_c,
+        condition,
+        humidity,
+        wind_mph,
+        wind_kph,
+        uv,
+        feelslike_f,
+        feelslike_c,
+        precip_in,
+        precip_mm
+      } = current;
+
+      // Build an HTML snippet
       output.innerHTML = `
-        <h2>Weather in ${loc.name}, ${loc.region}</h2>
-        <p>${condition}</p>
-        <p><strong>${tempF} °F</strong></p>
+        <h2>Weather in ${location.name}, ${location.region}</h2>
+        <p><img src="https:${condition.icon}" alt="${condition.text}"> ${condition.text}</p>
+        <ul>
+          <li><strong>Temperature:</strong> ${temp_f} °F (${temp_c} °C)</li>
+          <li><strong>Feels Like:</strong> ${feelslike_f} °F (${feelslike_c} °C)</li>
+          <li><strong>Humidity:</strong> ${humidity}%</li>
+          <li><strong>Wind:</strong> ${wind_mph} mph (${wind_kph} kph)</li>
+          <li><strong>Precipitation:</strong> ${precip_in} in (${precip_mm} mm)</li>
+          <li><strong>UV Index:</strong> ${uv}</li>
+        </ul>
       `;
+
     } catch (err) {
       console.error(err);
       output.innerHTML = `<p>Network error: ${err.message}</p>`;
