@@ -11,29 +11,31 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Replace with your valid OpenWeather API key
-    const apiKey = "d65e0394269143c193e215726251404";
-    
-    // Endpoint for current weather in Fahrenheit
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&units=imperial&appid=${apiKey}`;
-    
+    // Your WeatherAPI.com key
+    const apiKey = "YOUR_WEATHERAPI_KEY_HERE";
+
+    // WeatherAPI current weather endpoint (Fahrenheit)
+    const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${encodeURIComponent(city)}&aqi=no`;
+
     try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        // Show the error message from the response, e.g. "Unauthorized"
-        resultDiv.innerHTML = `<p>Error: ${response.statusText}</p>`;
+      const resp = await fetch(url);
+      if (!resp.ok) {
+        resultDiv.innerHTML = `<p>Error: ${resp.status} ${resp.statusText}</p>`;
         return;
       }
-      const data = await response.json();
-
-      // If the API responds with an error code or missing data:
-      if (!data.main || typeof data.main.temp === "undefined") {
+      const data = await resp.json();
+      // Data.main.temp is replaced by data.current.temp_f in WeatherAPI response
+      if (!data.current || typeof data.current.temp_f === "undefined") {
         resultDiv.innerHTML = `<p>Could not retrieve temperature for ${city}.</p>`;
         return;
       }
-
-      const temp = data.main.temp;
-      resultDiv.innerHTML = `<p>The temperature in <strong>${city}</strong> is <strong>${temp}</strong> °F.</p>`;
+      const tempF = data.current.temp_f;
+      const condition = data.current.condition.text;
+      resultDiv.innerHTML = `
+        <h2>Weather in ${data.location.name}, ${data.location.region}</h2>
+        <p>${condition}</p>
+        <p><strong>${tempF} °F</strong></p>
+      `;
     } catch (err) {
       resultDiv.innerHTML = `<p>Error fetching weather: ${err.message}</p>`;
     }
