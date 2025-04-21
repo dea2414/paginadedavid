@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Local News – David Arellano</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Additional styling for news page */
+    #news-content { max-width: 800px; margin: 30px auto; padding: 0 20px; }
+    .news-item { border-bottom: 1px solid #ddd; padding: 15px 0; }
+    .news-item h3 { margin: 0 0 5px; }
+    .news-item p { margin: 0; color: #555; font-size: 0.9em; }
+  </style>
+  <script defer src="js/news.js"></script>
+</head>
+<body>
+  <!-- Navbar (same as other pages) -->
+  <header>
+    <nav class="navbar">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="weather.html">Weather</a>
+      <a href="news.html" class="active">Local News</a>
+    </nav>
+  </header>
+
+  <main id="news-content">
+    <h1>Local News</h1>
+    <p>Fetching top headlines for your area (<span id="location">...</span>)…</p>
+    <div id="news-list"><!-- Articles go here --></div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 David Arellano. All rights reserved. Version 5.0</p>
+  </footer>
+</body>
+</html>
