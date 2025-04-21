@@ -4,39 +4,33 @@ document.addEventListener("DOMContentLoaded", () => {
   const listDiv    = document.getElementById("news-list");
   const newsApiKey = "6557ae20719640869fbc4315ed58c427";
 
-  // Helper: fetch JSON or throw http error
   async function fetchJson(url) {
     const resp = await fetch(url);
     if (!resp.ok) throw new Error(`${resp.status} ${resp.statusText}`);
     return resp.json();
   }
 
-  // Detect city via IP (HTTPS), fallback if needed
   async function detectCity() {
     try {
       const data = await fetchJson("https://ip-api.com/json/");
       if (data.status === "success" && data.city) return data.city;
     } catch {}
-    // Fallback
     const data2 = await fetchJson("https://ipapi.co/json/");
     return data2.city || data2.region || "your area";
   }
 
-  // Fetch and render news for the detected city
-  async function loadNews() {
-    let city;
-    try {
-      city = await detectCity();
-    } catch (err) {
-      console.error("City detection failed:", err);
-      city = "your area";
-    }
+  async function loadNews(city) {
     locSpan.textContent = city;
-    listDiv.innerHTML   = `<p>Loading news for ${city}…</p>`;
+    listDiv.innerHTML   = `<p>Loading headlines for ${city}…</p>`;
 
-    // Build NewsAPI URL & proxy to avoid CORS
-    const newsUrl  = `https://newsapi.org/v2/top-headlines?q=${encodeURIComponent(city)}&pageSize=5&apiKey=${newsApiKey}`;
-    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(newsUrl)}`;
+    // Use the "everything" endpoint with qInTitle to match city in title
+    const everythingUrl = 
+      `https://newsapi.org/v2/everything?` +
+      `qInTitle=${encodeURIComponent(city)}` +
+      `&pageSize=5&language=en&sortBy=publishedAt&apiKey=${newsApiKey}`;
+
+    // Proxy through AllOrigins to avoid CORS
+    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(everythingUrl)}`;
 
     try {
       const news = await fetchJson(proxyUrl);
@@ -46,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       const articles = news.articles;
       if (!articles.length) {
-        listDiv.innerHTML = "<p>No recent headlines found.</p>";
+        listDiv.innerHTML = `<p>No recent headlines with “${city}” in the title.</p>`;
         return;
       }
       listDiv.innerHTML = "";
@@ -55,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
         div.className = "news-item";
         div.innerHTML = `
           <h3><a href="${art.url}" target="_blank">${art.title}</a></h3>
-          <p>${art.source.name}</p>
+          <p><small>${new Date(art.publishedAt).toLocaleString()} – ${art.source.name}</small></p>
         `;
         listDiv.appendChild(div);
       });
@@ -65,5 +59,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  loadNews();
+  // On load: detect and load
+  detectCity()
+    .then(loadNews)
+    .catch(err => {
+      console.error("City detection failed:", err);
+      loadNews("your area");
+    });
 });
