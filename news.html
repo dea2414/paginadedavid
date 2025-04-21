@@ -10,29 +10,29 @@
     .news-item { border-bottom: 1px solid #ddd; padding: 15px 0; }
     .news-item h3 { margin: 0 0 5px; }
     .news-item p { margin: 0; color: #555; font-size: 0.9em; }
+    #override { margin: 20px 0; }
+    #override input { padding: 8px; width: 60%; }
+    #override button { padding: 8px 12px; }
   </style>
   <script defer src="js/news.js"></script>
 </head>
 <body>
-  <!-- Navbar (same as other pages) -->
   <header>
     <nav class="navbar">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="projects.html">Projects</a>
-      <a href="contact.html">Contact</a>
-      <a href="dashboard.html">Dashboard</a>
-      <a href="weather.html">Weather</a>
-      <a href="news.html" class="active">Local News</a>
+      … your existing nav …
     </nav>
   </header>
 
   <main id="news-content">
     <h1>Local News</h1>
+    <div id="override">
+      <label for="city-input">Or enter a different city:</label>
+      <input type="text" id="city-input" placeholder="e.g. London">
+      <button id="city-btn">Go</button>
+    </div>
     <p>Fetching top headlines for your area (<span id="location">...</span>)…</p>
-    <div id="news-list"><!-- Articles go here --></div>
+    <div id="news-list"></div>
   </main>
-
   <footer>
     <p>&copy; 2025 David Arellano. All rights reserved. Version 5.0</p>
   </footer>
