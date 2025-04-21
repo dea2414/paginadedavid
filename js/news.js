@@ -1,59 +1,54 @@
 // js/news.js
-// Updated to use a CORS proxy (AllOrigins) for NewsAPI.org requests
-
-/**
- * Fetches JSON from a URL, throwing an error on non-OK status.
- */
-async function fetchJson(url) {
-  const resp = await fetch(url);
-  if (!resp.ok) throw new Error(`${resp.status} ${resp.statusText}`);
-  return resp.json();
-}
-
 document.addEventListener("DOMContentLoaded", () => {
   const locSpan    = document.getElementById("location");
   const listDiv    = document.getElementById("news-list");
-  const newsApiKey = "6557ae20719640869fbc4315ed58c427"; // Your NewsAPI.org key
+  const newsApiKey = "6557ae20719640869fbc4315ed58c427";
 
-  /**
-   * Detects city via IP, tries ip-api.com over HTTPS, falls back to ipapi.co.
-   */
+  const overrideInput = document.getElementById("city-input");
+  const overrideBtn   = document.getElementById("city-btn");
+
+  // Helper to fetch JSON and throw on HTTP errors
+  async function fetchJson(url) {
+    const resp = await fetch(url);
+    if (!resp.ok) throw new Error(`${resp.status} ${resp.statusText}`);
+    return resp.json();
+  }
+
+  // Detect city by IP (HTTPS), fallback if needed
   async function detectCity() {
     try {
       const data = await fetchJson("https://ip-api.com/json/");
       if (data.status === "success" && data.city) return data.city;
-      throw new Error("ip-api.com returned no city");
-    } catch {
+    } catch {}
+    try {
       const data2 = await fetchJson("https://ipapi.co/json/");
       return data2.city || data2.region || "your area";
+    } catch {
+      return "your area";
     }
   }
 
-  /**
-   * Loads and renders news for the detected city.
-   */
-  async function loadNews() {
+  // Fetch and render news for a given city
+  async function loadNews(city) {
+    locSpan.textContent = city;
+    listDiv.innerHTML   = `<p>Loading news for ${city}…</p>`;
+
+    const newsUrl = `https://newsapi.org/v2/top-headlines?` +
+                    `q=${encodeURIComponent(city)}` +
+                    `&pageSize=5&apiKey=${newsApiKey}`;
+    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(newsUrl)}`;
+
     try {
-      const city = await detectCity();
-      locSpan.textContent = city;
-
-      // Build NewsAPI URL
-      const newsUrl = `https://newsapi.org/v2/top-headlines?q=${encodeURIComponent(city)}&pageSize=5&apiKey=${newsApiKey}`;
-      // Wrap it via AllOrigins CORS proxy
-      const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(newsUrl)}`;
-
       const news = await fetchJson(proxyUrl);
       if (news.status !== "ok") {
         listDiv.innerHTML = `<p>Error: ${news.message}</p>`;
         return;
       }
-
       const articles = news.articles;
       if (!articles.length) {
         listDiv.innerHTML = "<p>No recent headlines found.</p>";
         return;
       }
-
       listDiv.innerHTML = "";
       articles.forEach(art => {
         const div = document.createElement("div");
@@ -70,5 +65,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  loadNews();
+  // On load: auto-detect city then load news
+  detectCity().then(loadNews).catch(err => {
+    console.error(err);
+    locSpan.textContent = "your area";
+    listDiv.innerHTML = `<p>Could not detect location.</p>`;
+  });
+
+  // On override button click: load news for typed city
+  overrideBtn.addEventListener("click", () => {
+    const city = overrideInput.value.trim();
+    if (city) loadNews(city);
+  });
 });
