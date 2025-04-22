@@ -29,6 +29,7 @@
       margin: 30px auto;
       max-width: 50%;
       height: auto;
+      border-radius: 10px;
     }
     .scoreboard {
       margin-top: 40px;
@@ -55,18 +56,19 @@
 </head>
 <body>
   <h1>Hello Country Financial, Select Your Profile</h1>
-  
-  <!-- Central Image (smaller) -->
-   <img src="pancho.jpg" />
-  
+
+  <!-- Fixed image loading and styling -->
+  <img src="pancho.JPG" alt="Pancho" class="center-image" />
+
   <!-- Profile selection buttons -->
   <a href="dashboard.html" data-profile="recruiter">Recruiter</a>
   <a href="dashboard.html" data-profile="friend">Friend</a>
   <a href="dashboard.html" data-profile="family">Family</a>
   <a href="dashboard.html" data-profile="stalker">Stalker</a>
   <a href="weather.html" class="active">Weather</a>
-  <a href="news.html"      class="profile-btn">Local News</a>
-  <!-- New: Live Scoreboard Section -->
+  <a href="news.html" class="profile-btn">Local News</a>
+
+  <!-- Scoreboard -->
   <div class="scoreboard" id="scoreboard">
     <h2>Live Scoreboard</h2>
     <table id="score-table">
@@ -81,49 +83,40 @@
       </tbody>
     </table>
   </div>
-  
+
   <script>
-    // Profile selection: save profile in localStorage when a button is clicked.
+    // store profile type
     document.querySelectorAll("a[data-profile]").forEach(function(link) {
       link.addEventListener("click", function() {
         localStorage.setItem("profile", this.getAttribute("data-profile"));
       });
     });
 
-    // Dummy API call: simulate fetching scores/standings.
+    // simulate score fetch
     function fetchScores() {
-      // In a real scenario, you'd use fetch('https://api.example.com/scores')
-      // For now, we simulate with a promise returning dummy data.
-      const dummyData = [
-        { team: "Team A", score: 42 },
-        { team: "Team B", score: 35 },
-        { team: "Team C", score: 28 }
-      ];
       return new Promise((resolve) => {
-        setTimeout(() => resolve(dummyData), 1000);
+        setTimeout(() => {
+          resolve([
+            { team: "Team A", score: 42 },
+            { team: "Team B", score: 35 },
+            { team: "Team C", score: 28 }
+          ]);
+        }, 1000);
       });
     }
 
     function populateScoreboard() {
       fetchScores().then(function(scores) {
         const tbody = document.getElementById("score-table").querySelector("tbody");
-        tbody.innerHTML = ""; // Clear any existing content.
+        tbody.innerHTML = "";
         scores.forEach(function(item) {
           const row = document.createElement("tr");
-          const teamCell = document.createElement("td");
-          teamCell.textContent = item.team;
-          const scoreCell = document.createElement("td");
-          scoreCell.textContent = item.score;
-          row.appendChild(teamCell);
-          row.appendChild(scoreCell);
+          row.innerHTML = `<td>${item.team}</td><td>${item.score}</td>`;
           tbody.appendChild(row);
         });
-      }).catch(function(err) {
-        console.error("Error fetching scores:", err);
-      });
+      }).catch(console.error);
     }
-    
-    // Populate the scoreboard when the page loads.
+
     populateScoreboard();
   </script>
 </body>
