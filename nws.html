@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>US National Weather</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #c2e9fb, #81a4fd);
+      text-align: center;
+      margin-top: 50px;
+      color: #333;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      font-size: 16px;
+    }
+    #nws-result {
+      margin-top: 20px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      display: inline-block;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>US National Weather (NWS)</h1>
+  <form id="nws-form">
+    <input type="text" id="zip" placeholder="Enter ZIP Code" required />
+    <button type="submit">Get Forecast</button>
+  </form>
+
+  <div id="nws-result"></div>
+
+  <p>© 2025 David Arellano. All rights reserved.</p>
+
+  <script src="js/nws.js"></script>
+
+</body>
+</html>
