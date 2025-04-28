@@ -2,44 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Weather Checker – David Arellano</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script defer src="js/weather.js"></script>
+  <title>Weather Checker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #89f7fe, #66a6ff);
+      text-align: center;
+      margin-top: 50px;
+      color: #333;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      font-size: 16px;
+    }
+    #weather-result {
+      margin-top: 20px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      display: inline-block;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <nav class="navbar">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="projects.html">Projects</a>
-      <a href="contact.html">Contact</a>
-      <a href="dashboard.html">Dashboard</a>
-      <a href="weather.html" class="active">Weather</a>
-    </nav>
-  </header>
 
-  <main class="content-section">
-    <h1>Weather Checker</h1>
-    <p>Enter a city to get its current temperature in °F (via WeatherAPI.com):</p>
-    <form id="weather-form">
-      <input type="text" id="city" placeholder="Enter a city" required>
-      <button type="submit" class="btn">Get Weather</button>
-    </form>
+  <h1>Weather Checker</h1>
+  <form id="weather-form">
+    <input type="text" id="city" placeholder="Enter city name" required />
+    <button type="submit">Get Weather</button>
+  </form>
 
+  <div id="weather-result"></div>
 
+  <p>© 2025 David Arellano. All rights reserved.</p>
 
-     <p>Enter a city to get its current temperature in °F (via WeatherAPI.com):</p>
-    <form id="weather-form">
-      <input type="text" id="city" placeholder="Enter a city" required>
-      <button type="submit" class="btn">Get Weather</button>
-    </form>
+  <script src="js/weather.js"></script>
 
-
-    
-    <div id="weather-result"></div>
-  </main>
-
-  <footer>    <p>&copy; 2025 David Arellano. All rights reserved. Version 5.1.1</p>
-  </footer>
 </body>
 </html>
