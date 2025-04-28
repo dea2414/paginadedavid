@@ -1,69 +1,61 @@
-// js/news.js
+// js/weather.js
 document.addEventListener("DOMContentLoaded", () => {
-  const locSpan    = document.getElementById("location");
-  const listDiv    = document.getElementById("news-list");
-  const newsApiKey = "6557ae20719640869fbc4315ed58c427";
+  const form      = document.getElementById("weather-form");
+  const cityInput = document.getElementById("city");
+  const output    = document.getElementById("weather-result");
 
-  async function fetchJson(url) {
-    const resp = await fetch(url);
-    if (!resp.ok) throw new Error(`${resp.status} ${resp.statusText}`);
-    return resp.json();
-  }
-
-  async function detectCity() {
-    try {
-      const data = await fetchJson("https://ip-api.com/json/");
-      if (data.status === "success" && data.city) return data.city;
-    } catch {}
-    const data2 = await fetchJson("https://ipapi.co/json/");
-    return data2.city || data2.region || "your area";
-  }
-
-  async function loadNews(city) {
-    locSpan.textContent = city;
-    listDiv.innerHTML   = `<p>Loading headlines for ${city}…</p>`;
-
-    // Use the "everything" endpoint with qInTitle to match city in title
-    const everythingUrl = 
-      `https://newsapi.org/v2/everything?` +
-      `qInTitle=${encodeURIComponent(city)}` +
-      `&pageSize=5&language=en&sortBy=publishedAt&apiKey=${newsApiKey}`;
-
-    // Proxy through AllOrigins to avoid CORS
-    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(everythingUrl)}`;
-
-    try {
-      const news = await fetchJson(proxyUrl);
-      if (news.status !== "ok") {
-        listDiv.innerHTML = `<p>Error: ${news.message}</p>`;
-        return;
-      }
-      const articles = news.articles;
-      if (!articles.length) {
-        listDiv.innerHTML = `<p>No recent headlines with “${city}” in the title.</p>`;
-        return;
-      }
-      listDiv.innerHTML = "";
-      articles.forEach(art => {
-        const div = document.createElement("div");
-        div.className = "news-item";
-        div.innerHTML = `
-          <h3><a href="${art.url}" target="_blank">${art.title}</a></h3>
-          <p><small>${new Date(art.publishedAt).toLocaleString()} – ${art.source.name}</small></p>
-        `;
-        listDiv.appendChild(div);
-      });
-    } catch (err) {
-      console.error("News fetch failed:", err);
-      listDiv.innerHTML = `<p>Network error: ${err.message}</p>`;
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const city = cityInput.value.trim();
+    if (!city) {
+      output.innerHTML = "<p>Please enter a city name.</p>";
+      return;
     }
-  }
 
-  // On load: detect and load
-  detectCity()
-    .then(loadNews)
-    .catch(err => {
-      console.error("City detection failed:", err);
-      loadNews("your area");
-    });
-});
+
+    const apiKey = "d65e0394269143c193e215726251404";
+    const url =
+      "https://api.weatherapi.com/v1/current.json" +
+@@ -24,21 +23,41 @@
+      const resp = await fetch(url);
+      const data = await resp.json();
+
+
+      if (data.error) {
+        output.innerHTML = `<p>Error: ${data.error.message}</p>`;
+        return;
+      }
+
+      // Destructure the fields we care about:
+      const { location, current } = data;
+      const {
+        temp_f,
+        temp_c,
+        condition,
+        humidity,
+        wind_mph,
+        wind_kph,
+        uv,
+        feelslike_f,
+        feelslike_c,
+        precip_in,
+        precip_mm
+      } = current;
+
+      // Build an HTML snippet
+      output.innerHTML = `
+        <h2>Weather in ${location.name}, ${location.region}</h2>
+        <p><img src="https:${condition.icon}" alt="${condition.text}"> ${condition.text}</p>
+        <ul>
+          <li><strong>Temperature:</strong> ${temp_f} °F (${temp_c} °C)</li>
+          <li><strong>Feels Like:</strong> ${feelslike_f} °F (${feelslike_c} °C)</li>
+          <li><strong>Humidity:</strong> ${humidity}%</li>
+          <li><strong>Wind:</strong> ${wind_mph} mph (${wind_kph} kph)</li>
+          <li><strong>Precipitation:</strong> ${precip_in} in (${precip_mm} mm)</li>
+          <li><strong>UV Index:</strong> ${uv}</li>
+        </ul>
+      `;
+
+    } catch (err) {
+      console.error(err);
+      output.innerHTML = `<p>Network error: ${err.message}</p>`;
