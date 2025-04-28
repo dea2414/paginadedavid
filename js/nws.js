@@ -17,15 +17,21 @@ document.addEventListener("DOMContentLoaded", () => {
     output.innerHTML = `<p>Loading forecast for ${zip}...</p>`;
 
     try {
-      // 1. Geocode ZIP to get lat/lon
-      const geoResp = await fetch(`https://api.weather.gov/points/${zip}`);
+      // 1. Convert ZIP → lat/lon using Zippopotam.us
+      const geoResp = await fetch(`https://api.zippopotam.us/us/${zip}`);
+      if (!geoResp.ok) throw new Error("Invalid ZIP Code");
       const geoData = await geoResp.json();
-      if (!geoData.properties) throw new Error("Invalid ZIP Code");
+      const latitude = geoData.places[0].latitude;
+      const longitude = geoData.places[0].longitude;
 
-      const forecastUrl = geoData.properties.forecast;
-      const city = geoData.properties.relativeLocation.properties.city;
+      // 2. Get forecast URL from weather.gov
+      const pointResp = await fetch(`https://api.weather.gov/points/${latitude},${longitude}`);
+      if (!pointResp.ok) throw new Error("Invalid coordinates or not found.");
+      const pointData = await pointResp.json();
+      const forecastUrl = pointData.properties.forecast;
+      const city = pointData.properties.relativeLocation.properties.city;
 
-      // 2. Fetch Forecast
+      // 3. Fetch the forecast
       const forecastResp = await fetch(forecastUrl);
       const forecastData = await forecastResp.json();
 
