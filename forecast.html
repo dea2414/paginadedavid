@@ -3,44 +3,60 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>precipitation forecast</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <title>Precipitation Forecast</title>
+  <!-- leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet/dist/leaflet.css"
+  />
   <style>
+    /* full-screen map container */
     html, body { margin:0; padding:0; height:100%; }
-    #map { width:100%; height:100%; }
+    #map { width:100%; height:100%; font:16px sans-serif; text-align:center; }
   </style>
 </head>
 <body>
   <div id="map">loading…</div>
 
+  <!-- leaflet JS -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-  // your OWM tile-layer key
-  const key = 'fcf78e5c32b166d2e4507c5f95e2fca7';
+  (async function() {
+    const key = 'fcf78e5c32b166d2e4507c5f95e2fca7';  // your OpenWeather API key
+    const mapEl = document.getElementById('map');
 
-  function initMap(lat, lon) {
-    const mapDiv = document.getElementById('map');
-    mapDiv.textContent = '';  
-    const map = L.map('map').setView([lat, lon], 6);
-    // openstreetmap base
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19, attribution: '&copy; OpenStreetMap'
-    }).addTo(map);
-    // precipitation overlay
-    L.tileLayer(
-      `https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${key}`, 
-      { maxZoom: 19, opacity: 0.5, attribution: '&copy; OpenWeatherMap' }
-    ).addTo(map);
-  }
+    try {
+      // 1) lookup via ipapi.co (HTTPS)
+      const resp = await fetch('https://ipapi.co/json/');
+      if (!resp.ok) throw new Error('geolookup status ' + resp.status);
+      const data = await resp.json();
+      console.log('geo:', data);
 
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      pos => initMap(pos.coords.latitude, pos.coords.longitude),
-      ()   => initMap(39.8283, -98.5795)  // fallback: center of US
-    );
-  } else {
-    initMap(39.8283, -98.5795);
-  }
+      const lat = data.latitude  || 39.8283;  // fallback if missing
+      const lon = data.longitude || -98.5795;
+
+      // 2) init Leaflet
+      const map = L.map('map').setView([lat, lon], 6);
+
+      // 3) OSM base layer
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap'
+      }).addTo(map);
+
+      // 4) OpenWeather precipitation overlay
+      const layer = L.tileLayer(
+        `https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${key}`,
+        { maxZoom: 19, opacity:0.5, attribution:'&copy; OpenWeatherMap' }
+      );
+      layer.on('tileerror', e => console.error('tileerror', e));
+      layer.addTo(map);
+
+    } catch (err) {
+      console.error('map failed:', err);
+      mapEl.textContent = 'map failed to load: ' + err.message;
+    }
+  })();
   </script>
 </body>
 </html>
