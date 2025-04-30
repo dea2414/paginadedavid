@@ -1,0 +1,11 @@
+/* css/style.css */
+
+/* existing rules… */
+
+#map {
+  width: 600px;
+  height: 400px;
+  margin: 1em auto;
+  text-align: center;
+  line-height: 400px;  /* centers “loading…” text vertically */
+}
