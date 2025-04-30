@@ -1,29 +1,27 @@
 // js/map.js
 window.addEventListener('DOMContentLoaded', () => {
-  fetch('/api/location')
-    .then(r => r.json())
+  // 1) lookup city/region by visitor IP
+  fetch('https://ip-api.com/json/?fields=city,region')
+    .then(res => res.json())
     .then(loc => {
-      const place = encodeURIComponent(`${loc.city},${loc.region}`);
-      const id     = 'd9hBUyLEhTfmYcySdwiUS';     // your Client ID
-      const secret = 'ijQ1dVpW0zbYTWnvXEA6wL1zKmbYQTtCvqT1jP5h'; // your Secret
+      const place  = encodeURIComponent(`${loc.city},${loc.region}`);
+      const id     = 'd9hBUyLEhTfmYcySdwiUS';      // your Aeris Client ID
+      const secret = 'ijQ1dVpW0zbYTWnvXEA6wL1zKmbYQTtCvqT1jP5h'; // your Aeris Secret
 
-      const layers = 'flat,forecast-precip';
-      const size   = '600x400';
-      const zoom   = 6;
-      const ext    = 'gif';   // or 'jpg'
-
-      const src = [
-        'https://maps.api.xweather.com/',
+      // 2) build the static-map URL
+      const url = [
+        'https://maps.aerisapi.com/',
         `${id}_${secret}/`,
-        `${layers}/`,
-        `${size}/`,
-        `${place}/`,
-        `${zoom}/`,
-        `current.${ext}`
+        'roads,forecast-precip/',  // layer: 24h precip forecast + roads
+        '600x400/',                // size
+        `${place}/`,               // city,region
+        '6/',                      // zoom
+        'current.gif'              // gif animation (or .png/.jpg)
       ].join('');
 
-      document.getElementById('map')
-              .innerHTML = `<img src="${src}" alt="forecast for ${loc.city}">`;
+      // 3) inject the image
+      document.getElementById('map').innerHTML =
+        `<img src="${url}" alt="forecast for ${loc.city}" />`;
     })
     .catch(err => {
       console.error(err);
