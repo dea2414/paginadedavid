@@ -3,11 +3,9 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Precipitation Forecast Map</title>
-  <!-- Leaflet CSS -->
+  <title>precipitation forecast</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
   <style>
-    /* make map fill the viewport */
     html, body { margin:0; padding:0; height:100%; }
     #map { width:100%; height:100%; }
   </style>
@@ -15,41 +13,34 @@
 <body>
   <div id="map">loading…</div>
 
-  <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-  (async () => {
-    try {
-      // 1) get visitor lat/lon via HTTPS
-      const r = await fetch('https://ipapi.co/json/');
-      const loc = await r.json();
-      const lat = loc.latitude || 39.8283;    // fallback to center of US
-      const lon = loc.longitude || -98.5795;
+  // your OWM tile-layer key
+  const key = 'fcf78e5c32b166d2e4507c5f95e2fca7';
 
-      // 2) init Leaflet map
-      const map = L.map('map').setView([lat, lon], 6);
+  function initMap(lat, lon) {
+    const mapDiv = document.getElementById('map');
+    mapDiv.textContent = '';  
+    const map = L.map('map').setView([lat, lon], 6);
+    // openstreetmap base
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19, attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+    // precipitation overlay
+    L.tileLayer(
+      `https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${key}`, 
+      { maxZoom: 19, opacity: 0.5, attribution: '&copy; OpenWeatherMap' }
+    ).addTo(map);
+  }
 
-      // 3) add OpenStreetMap base layer
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; OpenStreetMap'
-      }).addTo(map);
-
-      // 4) add OpenWeather precipitation overlay
-      L.tileLayer(
-        'https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=fcf78e5c32b166d2e4507c5f95e2fca7',
-        {
-          maxZoom: 19,
-          opacity: 0.5,
-          attribution: '&copy; OpenWeatherMap'
-        }
-      ).addTo(map);
-
-    } catch (err) {
-      console.error(err);
-      document.getElementById('map').textContent = 'map failed to load';
-    }
-  })();
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      pos => initMap(pos.coords.latitude, pos.coords.longitude),
+      ()   => initMap(39.8283, -98.5795)  // fallback: center of US
+    );
+  } else {
+    initMap(39.8283, -98.5795);
+  }
   </script>
 </body>
 </html>
