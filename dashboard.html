@@ -1,32 +1,89 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Dashboard</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      background: linear-gradient(to right, #cce4ff, #e0f0ff);
-      color: #333;
-      text-align: center;
-      margin-top: 50px;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <title>Recruiter Dashboard</title>
+  <link href="style.css" rel="stylesheet" />
 </head>
-<body>
-  <h1 id="greeting"></h1>
-  <p id="message"></p>
-  <script>
-    var profile = localStorage.getItem("profile") || "guest";
-    var messages = {
-      recruiter: ["Hello Recruiter", "Check out my resume and projects."],
-      friend: ["Love you guys!"],
-      family: ["Hola Familia! Gracias por todo. Estoy haciendo esto por ustedes y esto es un ejemplo. HOLA Perfe"],
-      stalker: ["Hello", "I see you... thanks for your IP "],
-      guest: ["Welcome", "Please select a profile on the home page."]
-    };
-    document.getElementById("greeting").innerText = messages[profile][0];
-    document.getElementById("message").innerText = messages[profile][1];
-  </script>
+<body class="bg-gradient-to-r from-yellow-100 to-yellow-300 min-h-screen">
+
+  <header class="p-6 bg-white shadow-md">
+    <h1 class="text-3xl font-bold text-center">Recruiter Dashboard</h1>
+  </header>
+
+  <nav class="flex justify-center space-x-4 my-6">
+    <a href="index.html" class="text-blue-700 hover:underline">Home</a>
+    <a href="about.html" class="text-blue-700 hover:underline">About</a>
+    <a href="projects.html" class="text-blue-700 hover:underline">Projects</a>
+    <a href="contact.html" class="text-blue-700 hover:underline">Contact</a>
+  </nav>
+
+  <main class="max-w-4xl mx-auto px-4">
+
+    <!-- … your existing “live scoreboard” & other recruiter widgets here … -->
+    <div class="scoreboard bg-white p-6 rounded-lg shadow">
+      <h2 class="text-2xl font-semibold mb-4">Live Scoreboard</h2>
+      <table class="w-full table-auto border-collapse">
+        <thead>
+          <tr>
+            <th class="border px-4 py-2">Team</th>
+            <th class="border px-4 py-2">Score</th>
+          </tr>
+        </thead>
+        <tbody id="score-table-body">
+          <!-- populated by your existing JS -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ──────────────────────────────────────────────────────────────── -->
+    <!-- New: ISU General Computer Science Requirements for Recruiters -->
+    <section id="cs-course-requirements"
+             class="mt-12 bg-white p-6 rounded-lg shadow">
+      <h2 class="text-2xl font-bold mb-4">ISU General Computer Science Requirements</h2>
+      <p class="mb-4 text-gray-700">
+        The B.S. in Computer Science (General Sequence) requires a minimum of
+        <strong>83 credit hours</strong>:
+      </p>
+      <ul class="list-disc list-inside space-y-2 text-gray-700">
+        <li>
+          <strong>Core Courses (24 cr):</strong>
+          COM 223, ENG 249, IT 168, 179, 180, 191, 214, 225, 261, 279
+        </li>
+        <li>
+          <strong>Advanced IT (30 cr):</strong>
+          IT 326, 327, 328, 378, 383, 386 and 6 cr from IT 398
+        </li>
+        <li>
+          <strong>Mathematics (9 cr):</strong>
+          MAT 145, 146, 260
+        </li>
+        <li>
+          <strong>Electives (9 cr):</strong>
+          Choose 9 cr from IT 244, 276, 329, 330, 340, 343, 348, 351, 352, 353, 355,
+          356, 367, 382, 385, 388
+        </li>
+        <li>
+          <strong>Lab Science (8 cr):</strong>
+          Any 2 courses from BSC 196, 197; CHE 140, 141; PHY 110, 111
+        </li>
+      </ul>
+      <p class="mt-6 text-gray-700">
+        For full details, see the
+        <a href="https://illinoisstate.edu/catalog/undergraduate/information-technology/general-computer-science-course-requirements/"
+           target="_blank"
+           rel="noopener"
+           class="text-blue-600 hover:underline">
+          official ISU catalog page
+        </a>.
+      </p>
+    </section>
+    <!-- ──────────────────────────────────────────────────────────────── -->
+
+    <!-- … any further recruiter content … -->
+
+  </main>
+
+  <script src="js/scoreboard.js"></script>
 </body>
 </html>
