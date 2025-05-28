@@ -27,7 +27,8 @@
     .center-image {
       display: block;
       margin: 30px auto;
-      max-width: 50%;
+      max-width: 200px;
+      width: 100%;
       height: auto;
       border-radius: 10px;
     }
@@ -57,9 +58,6 @@
 <body>
   <h1>Select Your Profile</h1>
 
-  <!-- Fixed image loading and styling -->
-  <img src="pancho.JPG" alt="Pancho" class="center-image" />
-
   <!-- Profile selection buttons -->
   <a href="dashboard.html" data-profile="recruiter">Recruiter</a>
   <a href="dashboard.html" data-profile="friend">Friend</a>
@@ -70,6 +68,9 @@
   <a href="nws.html" class="profile-btn">NWS</a>
   <a href="forecast.html" class="profile-btn">Radar</a>
 
+
+  <img src="pancho.JPG" alt="Pancho" class="center-image" />
+  
   <!-- Scoreboard -->
   <div class="scoreboard" id="scoreboard">
     <h2>Live Scoreboard</h2>
